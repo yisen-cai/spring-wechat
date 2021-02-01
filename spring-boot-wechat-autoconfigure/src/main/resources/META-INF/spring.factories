@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.com.glancebar.com.glancebar.wechat.WechatAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.glancebar.wechat.WechatAutoConfiguration

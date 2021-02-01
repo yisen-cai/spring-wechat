@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
  * @date 2021/2/1
  */
 @Configuration
-@ConditionalOnClass(WechatApi::class)
+@ConditionalOnClass(WechatMiniProgramApi::class)
 @EnableConfigurationProperties(value = [WechatProperties::class])
 open class WechatAutoConfiguration(
     private val wechatProperties: WechatProperties
@@ -32,7 +32,7 @@ open class WechatAutoConfiguration(
 
     @Bean
     @ConditionalOnMissingBean
-    open fun wechatApi(wechatConfig: WechatConfig): WechatApi {
-        return WechatApi(wechatConfig)
+    open fun wechatMiniProgramApi(wechatConfig: WechatConfig): WechatMiniProgramApi {
+        return WechatMiniProgramApi(wechatConfig)
     }
 }

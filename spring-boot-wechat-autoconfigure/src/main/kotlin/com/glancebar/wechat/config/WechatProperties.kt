@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
-@ConfigurationProperties(prefix = "com.glancebar.wechat")
+@ConfigurationProperties(prefix = "wechat")
 data class WechatProperties(
     val miniProgram: MiniProgram
 ) {

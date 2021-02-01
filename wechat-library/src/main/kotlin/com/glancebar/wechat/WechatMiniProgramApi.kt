@@ -1,61 +1,75 @@
 package com.glancebar.wechat
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.glancebar.wechat.exceptions.WechatRequestFailedException
 import com.glancebar.wechat.results.AccessTokenResult
 import com.glancebar.wechat.results.Code2SessionResult
+import com.glancebar.wechat.results.ErrorResult
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
-
 
 /**
  *
  * @author Ethan Gary
  * @date 2021/2/1
  */
-class WechatApi(
+class WechatMiniProgramApi(
     private var wechatConfig: WechatConfig
 ) {
 
     /**
      * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
      */
-    fun code2Session(jsCode: String): Code2SessionResult? {
-        val restTemplate = RestTemplate()
+    fun code2Session(jsCode: String): Code2SessionResult {
+
         val url = code2SessionURL.format(
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID],
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET],
             jsCode
         )
-        val responseEntity: ResponseEntity<Code2SessionResult> = restTemplate.exchange(
-            url,
-            HttpMethod.GET,
-            HttpEntity.EMPTY,
-            Code2SessionResult::class.java
-        )
-        return responseEntity.body
+
+        val mapper = jacksonObjectMapper()
+        return mapper.readValue(sendRequest(url), Code2SessionResult::class.java)
     }
 
 
     /**
      * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html
      */
-    fun getAccessToken(): AccessTokenResult? {
+    fun getAccessToken(): AccessTokenResult {
         val restTemplate = RestTemplate()
         val url = getAccessTokenURL.format(
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID],
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET]
         )
+        val mapper = jacksonObjectMapper()
+        return mapper.readValue(sendRequest(url), AccessTokenResult::class.java)
+    }
 
-        val responseEntity: ResponseEntity<AccessTokenResult> = restTemplate.exchange(
+
+    private fun sendRequest(
+        url: String
+    ): String {
+
+        val restTemplate = RestTemplate()
+        val bodyString = restTemplate.exchange(
             url,
             HttpMethod.GET,
             HttpEntity.EMPTY,
-            AccessTokenResult::class.java
-        )
-        return responseEntity.body
-    }
+            String::class.java
+        ).body!!
 
+        // handle all kinds error
+        if (bodyString.contains("errcode")) {
+            val mapper = jacksonObjectMapper()
+            val errorResult = mapper.readValue(bodyString, ErrorResult::class.java)
+            val exception = WechatRequestFailedException(errorResult)
+            throw exception
+        }
+
+        return bodyString
+    }
 
     companion object {
         const val code2SessionURL =
@@ -64,6 +78,6 @@ class WechatApi(
         const val getAccessTokenURL =
             "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
 
-    }
 
+    }
 }
