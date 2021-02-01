@@ -1,0 +1,4 @@
+rootProject.name = 'com.glancebar.wechat'
+include("spring-boot-wechat-autoconfigure")
+include("spring-boot-wechat-starter")
+include("wechat-library")
