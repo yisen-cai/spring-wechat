@@ -39,9 +39,9 @@
 
     <scm>
         <connection>scm:git:git://github.com/yisen-cai/spring-wechat.git</connection>
-        <developerConnection>scm:git:ssh://github.com/yisen-cai/spring-wechat.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:yisen-cai/spring-wechat.git</developerConnection>
         <url>https://github.com/yisen-cai/spring-wechat</url>
-        <tag>v0.0.2</tag>
+        <tag>spring-wechat-0.0.2</tag>
     </scm>
 
     <modules>
