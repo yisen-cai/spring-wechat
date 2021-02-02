@@ -22,7 +22,6 @@ class WechatMiniProgramApi(
      * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
      */
     fun code2Session(jsCode: String): Code2SessionResult {
-
         val url = code2SessionURL.format(
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID],
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET],
@@ -38,7 +37,6 @@ class WechatMiniProgramApi(
      * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html
      */
     fun getAccessToken(): AccessTokenResult {
-        val restTemplate = RestTemplate()
         val url = getAccessTokenURL.format(
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID],
             wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET]
@@ -51,7 +49,6 @@ class WechatMiniProgramApi(
     private fun sendRequest(
         url: String
     ): String {
-
         val restTemplate = RestTemplate()
         val bodyString = restTemplate.exchange(
             url,
@@ -72,12 +69,12 @@ class WechatMiniProgramApi(
     }
 
     companion object {
+
         const val code2SessionURL =
             "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
 
         const val getAccessTokenURL =
             "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
-
 
     }
 }

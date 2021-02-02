@@ -15,11 +15,18 @@ open class WechatMiniProgramApiTest {
     @BeforeAll
     fun setUp() {
         val wechatConfig = WechatConfig()
-        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID] = "wxef1c59645f9a2569"
-        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET] = "be5c2c31927934d2d2fcc7ef14b95691"
+        println(System.getenv())
+        // load from system env
+        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID] = System.getenv("APP_ID")
+        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET] = System.getenv("APP_SECRET")
+//        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_ID] = System.getProperty("appId")
+//        wechatConfig[WechatConfigParams.MINI_PROGRAM_APP_SECRET] = System.getProperty("appSecret")
         wechatMiniProgramApi = WechatMiniProgramApi(wechatConfig)
     }
 
+    /**
+     * this test need to using wechat developer tools generate login jsCode
+     */
 //    @Test
     fun code2Session() {
         val code2SessionResult = wechatMiniProgramApi.code2Session("071o7u000tq36L1fKX200J3xtk0o7u0y")

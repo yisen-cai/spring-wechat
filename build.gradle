@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
     id "maven-publish"
+    id "maven"
+    id "signing"
 }
 
 group 'com.glancebar.wechat'
@@ -16,7 +18,9 @@ repositories {
     mavenCentral()
 }
 
-
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
 //compileKotlin {
 //    kotlinOptions.jvmTarget = "1.8"
 //}
