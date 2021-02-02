@@ -6,7 +6,7 @@
 
     <groupId>com.glancebar.wechat</groupId>
     <artifactId>spring-wechat</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>spring-wechat</name>
