@@ -6,8 +6,45 @@
 
     <groupId>com.glancebar.wechat</groupId>
     <artifactId>spring-wechat</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>pom</packaging>
+
+    <name>spring-wechat</name>
+    <description>Spring WeChat API Integration.</description>
+    <url>https://github.com/yisen-cai/spring-wechat</url>
+
+
+    <licenses>
+        <license>
+            <name>The Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Ethan Gary</name>
+            <email>yisen614@gmail.com</email>
+            <organization>GlanceBar</organization>
+            <organizationUrl>http://glancebar.com/</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+            <properties>
+                <picUrl>https://issues.sonatype.org/secure/useravatar?avatarId=20043</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/yisen-cai/spring-wechat.git</connection>
+        <developerConnection>scm:git:ssh://github.com/yisen-cai/spring-wechat.git</developerConnection>
+        <url>https://github.com/yisen-cai/spring-wechat</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <modules>
         <module>wechat-library</module>
@@ -21,6 +58,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
         <spring.boot.version>2.4.1</spring.boot.version>
+        <dokka.version>1.4.20</dokka.version>
     </properties>
 
     <dependencies>
@@ -37,5 +75,115 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!--    <distributionManagement>-->
+    <!--        <snapshotRepository>-->
+    <!--            <id>ossrh</id>-->
+    <!--            <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+    <!--        </snapshotRepository>-->
+    <!--    </distributionManagement>-->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dokkaPlugins>
+                        <plugin>
+                            <groupId>org.jetbrains.dokka</groupId>
+                            <artifactId>kotlin-as-java-plugin</artifactId>
+                            <version>${dokka.version}</version>
+                        </plugin>
+                    </dokkaPlugins>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

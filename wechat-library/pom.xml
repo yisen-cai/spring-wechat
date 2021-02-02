@@ -7,12 +7,11 @@
     <parent>
         <groupId>com.glancebar.wechat</groupId>
         <artifactId>spring-wechat</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>wechat-library</artifactId>
-    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <dependencies>
