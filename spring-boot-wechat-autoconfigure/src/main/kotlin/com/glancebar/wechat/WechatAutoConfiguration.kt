@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration
 /**
  * Auto config properties
  * @author Ethan Gary
- * @date 2021/2/1
  */
 @Configuration
 @ConditionalOnClass(WechatMiniProgramApi::class)

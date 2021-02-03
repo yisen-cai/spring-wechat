@@ -3,6 +3,10 @@ package com.glancebar.wechat.config
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
+/**
+ * Wechat config properties.
+ * @author Ethan Gary
+ */
 @ConstructorBinding
 @ConfigurationProperties(prefix = "wechat")
 data class WechatProperties(

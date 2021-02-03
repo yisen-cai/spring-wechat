@@ -2,9 +2,8 @@ package com.glancebar.wechat
 
 
 /**
- *
+ * Wechat config properties params.
  * @author Ethan Gary
- * @date 2021/2/1
  */
 class WechatConfigParams {
     companion object {

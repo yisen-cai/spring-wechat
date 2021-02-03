@@ -10,9 +10,8 @@ import org.springframework.http.HttpMethod
 import org.springframework.web.client.RestTemplate
 
 /**
- *
+ * Wechat MiniProgram server side API.
  * @author Ethan Gary
- * @date 2021/2/1
  */
 class WechatMiniProgramApi(
     private var wechatConfig: WechatConfig

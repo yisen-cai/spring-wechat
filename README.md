@@ -17,11 +17,11 @@ implementation("com.glancebar.wechat:spring-boot-wechat-starter:0.0.1")
 Maven:
 
 ~~~xml
-  <dependency>
-    <groupId>com.glancebar.wechat</groupId>
-    <artifactId>spring-boot-wechat-starter</artifactId>
-    <version>0.0.1</version>
-  </dependency>
+<dependency>
+  <groupId>com.glancebar.wechat</groupId>
+  <artifactId>spring-boot-wechat-starter</artifactId>
+  <version>0.0.1</version>
+</dependency>
 ~~~
 
 
@@ -34,6 +34,21 @@ wechat:
     app-id: your-app-id
     app-secret: your-app-secret
 ~~~
+
+
+
+#### Add Scan autoconfiguration annotation
+
+~~~java
+# At your Spring Boot application entrance point.
+@SpringBootApplication
+@ComponentScan(value = ["com.glancebar"])
+class Application {
+		...
+}
+~~~
+
+
 
 
 

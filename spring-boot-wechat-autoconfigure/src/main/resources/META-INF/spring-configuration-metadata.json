@@ -3,12 +3,12 @@
     {
       "name": "wechat.mini-program.app-id",
       "type": "java.lang.String",
-      "description": "wechat.mini-program.app-id."
+      "description": "Wechat MiniProgram appId"
     },
     {
       "name": "wechat.mini-program.app-secret",
       "type": "java.lang.String",
-      "description": "wechat.mini-program.app-secret."
+      "description": "Wechat MiniProgram appSecret."
     }
   ]
 }
