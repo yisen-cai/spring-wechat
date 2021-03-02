@@ -1,8 +1,9 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm'
-    id "maven-publish"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "maven-publish"
 }
 
 allOpen {
@@ -10,8 +11,14 @@ allOpen {
     // annotations("com.another.Annotation", "com.third.Annotation")
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
+    }
+}
+
 group 'com.glancebar.wechat'
-version '0.0.1'
+version '0.0.3-SNAPSHOT'
 
 repositories {
     mavenLocal()
@@ -28,10 +35,10 @@ publishing {
 
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter:$springBootVersion")
+    compile project(":spring-boot-wechat-autoconfigure")
+    compile project(":wechat-library")
 
-    compile("com.glancebar.wechat:spring-boot-wechat-autoconfigure:$parent.version")
-    compile("com.glancebar.wechat:wechat-library:$parent.version")
+    implementation("org.springframework.boot:spring-boot-starter")
 }
 
 compileKotlin {
