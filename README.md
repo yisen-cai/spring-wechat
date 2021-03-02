@@ -2,25 +2,25 @@
 
 > Referencing wechat official document, supplying wechat server client APIs, integrating with spring.
 
-
+[Following this tutorial](https://reflectoring.io/spring-boot-starter/)
 
 ### Usage
 
 #### Add Dependency
 
-Gradle:
+`Gradle`:
 
 ~~~groovy
-implementation("com.glancebar.wechat:spring-boot-wechat-starter:0.0.1")
+implementation("com.glancebar.wechat:spring-boot-wechat-starter:0.0.2")
 ~~~
 
-Maven:
+`Maven`:
 
 ~~~xml
 <dependency>
   <groupId>com.glancebar.wechat</groupId>
   <artifactId>spring-boot-wechat-starter</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 </dependency>
 ~~~
 
@@ -29,26 +29,12 @@ Maven:
 #### Define Configuation
 
 ~~~yaml
+# resources/application.yml
 wechat:
   mini-program:
     app-id: your-app-id
     app-secret: your-app-secret
 ~~~
-
-
-
-#### Add Scan autoconfiguration annotation
-
-~~~java
-# At your Spring Boot application entrance point.
-@SpringBootApplication
-@ComponentScan(value = ["com.glancebar"])
-class Application {
-		...
-}
-~~~
-
-
 
 
 
@@ -75,7 +61,7 @@ val code2SessionResult = wechatMiniProgramApi.code2Session("031AXC0w3XU3LV2rqy0w
 
 #### [spring-boot-wechat-autoconfigure](https://github.com/yisen-cai/spring-wechat/tree/master/spring-boot-wechat-autoconfigure)
 
-> Define beans with condition(if not exists, and auto inject configuration, which using `spring-boot-autoconfigure`).
+> Define beans with condition(if not exists, then auto inject configuration).
 
 #### [spring-boot-wechat-starter](https://github.com/yisen-cai/spring-wechat/tree/master/spring-boot-wechat-starter)
 

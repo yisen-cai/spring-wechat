@@ -2,6 +2,12 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm'
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21"
+    // To get the version of the basic starter that is compatible to a certain Spring Boot version,
+    // we’re using the Spring Dependency Management plugin to include the BOM (bill of materials) of
+    // that specific version.
+    // This way, Gradle looks up the compatible version of the starter (and the versions of any other
+    // dependencies Spring Boot needs) in this BOM and we don’t have to declare it manually.
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "maven-publish"
 }
 
@@ -11,7 +17,13 @@ allOpen {
 }
 
 group 'com.glancebar.wechat'
-version '0.0.1'
+version '0.0.3-SNAPSHOT'
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
+    }
+}
 
 repositories {
     mavenLocal()
@@ -29,13 +41,15 @@ publishing {
 
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-autoconfigure:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
-    implementation("com.glancebar.wechat:wechat-library:$parent.version")
+    implementation project(":wechat-library")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
-    testCompile ('org.junit.jupiter:junit-jupiter:5.7.0')
+    // Generate its dependencies bean(Conditional Metadata) under META-INF(META-INF/spring-autoconfigure-metadata.properties) folder
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    // Creating IDE friendly Configuration Metadata
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testCompile('org.junit.jupiter:junit-jupiter:5.7.0')
 }
 
 compileKotlin {
