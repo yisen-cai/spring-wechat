@@ -1,17 +1,18 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
-    id "maven-publish"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21"
+
+    id "maven-publish"
+    id "org.jetbrains.dokka"
+    id 'signing'
 }
 
-allOpen {
-    annotation("com.glancebar.wechat")
-    // annotations("com.another.Annotation", "com.third.Annotation")
-}
 
 group 'com.glancebar.wechat'
 version '0.0.3-SNAPSHOT'
+
+
 
 repositories {
     mavenLocal()
@@ -19,22 +20,14 @@ repositories {
 }
 
 
-publishing {
-    publications {
-        myLibrary(MavenPublication) {
-            from components.java
-        }
-    }
-}
-
-
 dependencies {
     api("org.springframework:spring-web:5.3.2")
     compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8')
 
-//    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    // implementation("com.squareup.okhttp3:okhttp:4.9.0")
     testCompile('org.junit.jupiter:junit-jupiter:5.7.0')
 }
+
 
 test {
     useJUnitPlatform()
@@ -45,4 +38,23 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+signing {
+    sign publishing.publications.maven
 }

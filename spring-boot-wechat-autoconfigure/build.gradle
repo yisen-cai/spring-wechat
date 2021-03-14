@@ -1,20 +1,14 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21"
-    // To get the version of the basic starter that is compatible to a certain Spring Boot version,
-    // we’re using the Spring Dependency Management plugin to include the BOM (bill of materials) of
-    // that specific version.
-    // This way, Gradle looks up the compatible version of the starter (and the versions of any other
-    // dependencies Spring Boot needs) in this BOM and we don’t have to declare it manually.
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+
     id "maven-publish"
+    id "org.jetbrains.dokka"
+    id 'signing'
 }
 
-allOpen {
-    annotation("com.glancebar.wechat")
-    // annotations("com.another.Annotation", "com.third.Annotation")
-}
 
 group 'com.glancebar.wechat'
 version '0.0.3-SNAPSHOT'
@@ -31,17 +25,11 @@ repositories {
 }
 
 
-publishing {
-    publications {
-        myLibrary(MavenPublication) {
-            from components.java
-        }
-    }
-}
+
 
 
 dependencies {
-    implementation project(":wechat-library")
+    implementation(project(":wechat-library"))
 
     // Generate its dependencies bean(Conditional Metadata) under META-INF(META-INF/spring-autoconfigure-metadata.properties) folder
     implementation("org.springframework.boot:spring-boot-autoconfigure")
@@ -52,9 +40,33 @@ dependencies {
     testCompile('org.junit.jupiter:junit-jupiter:5.7.0')
 }
 
+test {
+    useJUnitPlatform()
+}
+
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+signing {
+    sign publishing.publications.maven
 }

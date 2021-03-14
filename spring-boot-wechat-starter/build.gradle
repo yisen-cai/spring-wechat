@@ -1,15 +1,14 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+
     id "maven-publish"
+    id "org.jetbrains.dokka"
+    id 'signing'
 }
 
-allOpen {
-    annotation("com.glancebar.wechat")
-    // annotations("com.another.Annotation", "com.third.Annotation")
-}
 
 dependencyManagement {
     imports {
@@ -25,6 +24,22 @@ repositories {
     mavenCentral()
 }
 
+
+dependencies {
+    compile(project(":spring-boot-wechat-autoconfigure"))
+    compile(project(":wechat-library"))
+
+    implementation("org.springframework.boot:spring-boot-starter")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 publishing {
     publications {
         myLibrary(MavenPublication) {
@@ -33,17 +48,11 @@ publishing {
     }
 }
 
-
-dependencies {
-    compile project(":spring-boot-wechat-autoconfigure")
-    compile project(":wechat-library")
-
-    implementation("org.springframework.boot:spring-boot-starter")
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+signing {
+    sign publishing.publications.maven
 }

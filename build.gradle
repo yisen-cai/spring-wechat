@@ -1,23 +1,23 @@
 plugins {
-    id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+
+    id "org.jetbrains.dokka" version "1.4.20"
     id "maven-publish"
-    id "maven"
-    id "signing"
+    id 'signing'
 }
 
 group 'com.glancebar.wechat'
 version '0.0.3-SNAPSHOT'
 
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
 ext {
     springBootVersion = "2.4.1"
 }
+
+
+def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+
+def publishURL = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
 repositories {
     mavenLocal()
@@ -26,4 +26,110 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+publishing {
+    repositories {
+        maven {
+            name 'ossrh'
+            url = publishURL
+            credentials {
+                username project.properties["ossrh.username"] as String
+                password project.properties["ossrh.password"] as String
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            pom {
+                name = 'spring-wechat'
+                description = 'Spring WeChat API Integration.'
+                url = 'https://github.com/yisen-cai/spring-wechat'
+                properties = [
+                        myProp          : "value",
+                        "prop.with.dots": "anotherValue"
+                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'yisen-cai'
+                        name = 'Ethan Gary'
+                        email = 'yisen614@gmail.com'
+                        organization = 'GlanceBar'
+                        organizationUrl = 'https://glancebar.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/yisen-cai/spring-wechat.git'
+                    developerConnection = 'scm:git:git@github.com:yisen-cai/spring-wechat.git'
+                    url = 'https://github.com/yisen-cai/spring-wechat'
+                }
+            }
+        }
+    }
+}
+
+
+subprojects {
+    apply plugin: 'maven-publish'
+
+    publishing {
+        repositories {
+            maven {
+                name 'ossrh'
+                url = publishURL
+                credentials {
+                    username project.properties["ossrh.username"] as String
+                    password project.properties["ossrh.password"] as String
+                }
+            }
+        }
+
+        publications {
+            maven(MavenPublication) {
+                pom {
+                    name = project.name
+                    description = 'Spring WeChat API Integration.'
+                    url = 'https://github.com/yisen-cai/spring-wechat/tree/main/' + project.name
+                    properties = [
+                            myProp          : "value",
+                            "prop.with.dots": "anotherValue"
+                    ]
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'yisen-cai'
+                            name = 'Ethan Gary'
+                            email = 'yisen614@gmail.com'
+                            organization = 'GlanceBar'
+                            organizationUrl = 'https://glancebar.com'
+                        }
+                    }
+
+                    scm {
+                        connection = 'scm:git:git://github.com/yisen-cai/spring-wechat.git'
+                        developerConnection = 'scm:git:git@github.com:yisen-cai/spring-wechat.git'
+                        url = 'https://github.com/yisen-cai/spring-wechat'
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.maven
 }
