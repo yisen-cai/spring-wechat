@@ -1,0 +1,3 @@
+# To make our configuration an auto-configuration, we list it in the file META-INF/spring.factories:
+# Spring Boot searches through all spring.factories files it finds on the classpath and loads the configurations declared within.
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.glancebar.wechat.WechatAutoConfiguration
