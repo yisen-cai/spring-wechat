@@ -3,6 +3,7 @@ package com.glancebar.wechat
 
 /**
  * Wechat config properties params.
+ *
  * @author YISEN CAI
  */
 class WechatConfigParams {

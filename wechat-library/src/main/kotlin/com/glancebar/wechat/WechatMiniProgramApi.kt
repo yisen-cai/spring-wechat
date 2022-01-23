@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate
 
 /**
  * Wechat MiniProgram server side API.
+ *
  * @author YISEN CAI
  */
 class WechatMiniProgramApi(
@@ -18,7 +19,9 @@ class WechatMiniProgramApi(
 ) {
 
     /**
-     * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+     * 生成AccessToken
+     *
+     * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html">doc</a>
      */
     fun code2Session(jsCode: String): Code2SessionResult {
         val url = code2SessionURL.format(
@@ -33,9 +36,10 @@ class WechatMiniProgramApi(
 
 
     /**
-     * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html
-     *
-     * [<img src="https://res.wx.qq.com/wxdoc/dist/assets/img/api-login.2fcc9f35.jpg">]
+     * 获取接口访问Token
+     * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html">doc</a>
+     * <br/>
+     * <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/api-login.2fcc9f35.jpg"/>
      */
     fun getAccessToken(): AccessTokenResult {
         val url = getAccessTokenURL.format(
