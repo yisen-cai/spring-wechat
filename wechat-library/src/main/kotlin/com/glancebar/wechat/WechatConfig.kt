@@ -4,7 +4,8 @@ import java.util.*
 
 /**
  * Store WechatMiniProgramApi configuration properties.
- * @author EthanGary
+ *
+ * @author YISEN CAI
  */
 class WechatConfig(
 

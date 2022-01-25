@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration
 
 
 /**
- * Auto config properties
+ * Auto config properties.
+ *
  * @author YISEN CAI
  */
 @Configuration

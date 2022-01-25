@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 /**
  * Wechat config properties.
+ *
  * @author YISEN CAI
  */
 @ConstructorBinding
